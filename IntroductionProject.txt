@@ -1,0 +1,94 @@
+# Final Project:
+
+1. Tạo Project Shop Sử dụng Spring Boot + JPA + Security + Thymeleaf để cấu hình. 
+
+2. Phân quyền:  
+
+**ADMIN** - Quản trị (CRUD: add, update, delete, search) User, Category, Product, Bill, BillProduct (mặt hàng trong đơn hàng) (tham khảo code mẫu shopbanhang) . Ngoài ra có thê tạo thêm model khác nữa nhưng nên để làm sau.
+
+**MEMBER**:  Xem product, chi tiết product, Lọc product theo price, name, category, add to cart, add order (thanh toán), xem bill của member đó và billproduct của một bill.
+
+**Anonymous**(No login require) : Xem product, chi tiết product, Lọc product theo price, name, category.
+
+3. Sử dụng thymeleaf layout, hoặc dùng thêm thư viện layout-dialect để kế thừa view làm cũng đc. xem code mẫu 
+
+<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency> 
+
+https://github.com/dinhduccuong/class-spring08/blob/master/shopbanhang/pom.xml
+
+4. Tạo Entity, DTO, service, dao, controller và full admin function, member functions và client anonymous function
+
+- Dùng thư viện lombok để loại bỏ set get
+- Sử dụng JPARepository cho code nhanh hơn thay vì entitymanager cần can thiệp sâu.
+
+5. Sử dụng cấu trúc MVC và Clean Structure, bắt lỗi ngọai lệ.
+
+Thêm giỏ hàng, lưu vào session, sau đó thanh toán thì bắt login MEMBER và tạo Bill.
+
+Tham khảo code project mẫu. Có gì cần hỏi thêm về hướng làm và cách làm nhá.
+
+# Phần NÂNG CAO (Nên làm)
+
+1. Phân trang, và xử lý ẩn hiện menu theo vai trò. (Phần 4:  https://www.thymeleaf.org/doc/articles/springsecurity.html) 
+
+2. Mỗi product có nhiều Comment(id, content, User createdBy, Date createdDate, Product product) 
+
+3. Mỗi product có nhiều Review(id, int startCounter, User createdBy, Date createdDate, Product product)
+
+4. Gửi email dùng spring mail, khi cơn hàng mới tạo về tài khoan admin
+(Viết hàm tìm kiếm user theo vai trò role "ADMIN", sau đó khi có đơn hàng, thì for từng user ở đay rồi lây thông tin email gửi đi. nội dung email thì soạn sẵn cơ bản, có thể dùng thymeleaf làm email template luôn cũng đc)
+
+- Tham khảo mục 4.3 (sử dụng bean templateEngine và thymeleaf sẵn trong spring boot ko cần cấu hình gì)
+https://www.thymeleaf.org/doc/articles/springmail.html
+
+5. Tạo thêm discount bằng cách tạo mã coupon(id, code, discountPercentage, Date expiredDate) . khi thanh toán order, nhập mã thì sẽ check mã xem đc giảm bao nhiều % vào tổng giá đơn hàng (bảng Bill, tạo thêm 1 cột discount lưu số tiền được giảm đó) 
+
+6. Viết các API REST cho các URL chức năng hiện có. (security cần and().httpbasic() thêm, song song formlogin)
+
+7. Bắt lỗi ngoại lệ về trang thân thiện cho các exception
+
+8. Sử dụng validator form (tham khảo validator bên spring mvc) 
+
+
+# Phần Kinh nghiệm ( đi làm)
+
+1. Nghiên cứu cách sử dụng thư viện scheduler
+
+https://www.baeldung.com/spring-scheduled-tasks
+
+2. Nghiên cứu cách dùng thư viện spring batch 
+
+https://howtodoinjava.com/spring-batch/java-config-multiple-steps/
+
+3. Nghiên cứu cách dùng thư viện spring AOP
+
+https://www.baeldung.com/spring-aop
+
+4. Nghiên cứu cách dùng thư viện spring message queue
+
+https://www.javainuse.com/spring/spring-boot-rabbitmq-hello-world
+
+5. Đoc ghi file PDF dùng thư viện ITEXT 
+
+6. Đọc ghi file excel dùng thư viện APACHE POI
+
+7. Bảo mật sử dụng JWT 
+
+8. Sử dụng OAUTH 2 với AUTH0.com hoặc OKTA.
+
+9. Gọi API bằng RestTemplate 
+
+10. Sử dụng OpenAPI để gen API docs
+
+11. Tìm hiểu về Quartz Scheduler
+
+12. Tìm hiểu về Database Versioning with Spring Boot and Liquibase
+
+13. SQL Indexing
